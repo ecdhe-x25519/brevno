@@ -1,0 +1,14 @@
+[package]
+name = "brevno"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+buffers = { path = "../buffers" }
+
+[dev-dependencies]
+log = "0.4.33"
+
+[features]
+default = ["std"]
+std = []
