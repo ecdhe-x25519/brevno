@@ -14,6 +14,7 @@ pub enum LogLevel {
 }
 
 impl LogLevel {
+    #[inline(always)]
     pub fn as_str(&self) -> &'static str {
         match self {
             Self::Error => "[ERROR] ",
@@ -31,6 +32,7 @@ pub struct Log<const N: usize> {
 }
 
 impl<const N: usize> Log<N> {
+    #[inline(always)]
     pub const fn new() -> Self {
         Log {
             msg: [0u8; N],
@@ -80,6 +82,7 @@ struct LogWriter<'a, const N: usize> {
 }
 
 impl<'a, const N: usize> fmt::Write for LogWriter<'a, N> {
+    #[inline(always)]
     fn write_str(&mut self, s: &str) -> fmt::Result {
         let bytes = s.as_bytes();
         let remaining = N - self.log.len;
@@ -115,6 +118,26 @@ impl<const NB: usize, const NL: usize> Logger<NB, NL> {
         }
     }
 
+    #[inline(always)]
+    pub fn level(&self) -> LogLevel {
+        self.level
+    }
+
+    #[inline(always)]
+    pub fn push_raw(&self, log: Log<NL>) -> Result<(), &'static str> {
+        if self.buffer.is_full() {
+            return Err("Buffer is full");
+        }
+        let _ = self.buffer.push(log);
+        Ok(())
+    }
+
+    #[inline(always)]
+    pub fn is_full(&self) -> bool {
+        self.buffer.is_full()
+    }
+
+    #[inline(always)]
     pub fn write_log(&self, level: LogLevel, args: fmt::Arguments) -> Result<(), &'static str> {
         if (self.level as u8) < (level as u8) {
             return Ok(());
@@ -134,6 +157,7 @@ impl<const NB: usize, const NL: usize> Logger<NB, NL> {
         Ok(())
     }
 
+    #[inline(always)]
     pub fn read_log(&self) -> Option<Log<NL>> { 
         if self.buffer.is_empty() { 
             return None; 

@@ -6,7 +6,7 @@ This library is designed for low-latency systems and embedded applications where
 
 ## Key Features
 
-* **Execution Speed:** Up to 30 times faster than the standard `log` facade in microbenchmarks using `std::hint::black_box`.
+* **Execution Speed:** Up to 100 times faster than the standard `log` facade in microbenchmarks using `std::hint::black_box`.
 * **Zero Allocations:** Operates entirely without heap allocations (`no_std`). Memory for buffers is statically allocated at compile time.
 * **Lock-free Pipeline:** Worker threads push structured log events into a ring buffer using atomic operations, bypassing immediate physical I/O (UART, SSD, Network).
 * **Compile-time Configuration:** The total number of ring buffer slots (`NB`) and the maximum message array length (`NL`) are fixed at compile time via generics.
@@ -17,9 +17,9 @@ Tested with 100,000 logging operations in release mode (`--release`):
 
 ```text
 === BENCHMARK ===
-BREVNO: 2.14ms
-LOG: 64.21ms
-BREVNO IS 30 TIMES FASTER
+BREVNO: 203.239µs
+LOG:    14.89848ms
+BREVNO IS 73 TIMES FASTER!
 =================
 ```
 
