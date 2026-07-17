@@ -140,10 +140,6 @@ impl<const NB: usize, const NL: usize> Logger<NB, NL> {
         } 
         self.buffer.pop() 
     }
-
-    pub fn flush_one(&self) -> Option<Log<NL>> {
-        self.read_log()
-    }
 }
 
 #[cfg(test)]
