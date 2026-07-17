@@ -103,14 +103,14 @@ impl<'a, const N: usize> fmt::Write for LogWriter<'a, N> {
 }
 
 pub struct Logger<const NB: usize, const NL: usize> {
-    buffer: buffers::SpscRingBuf<Log<NL>, NB>,
+    buffer: buffe_rs::SpscRingBuf<Log<NL>, NB>,
     level: LogLevel,
 }
 
 impl<const NB: usize, const NL: usize> Logger<NB, NL> {
     pub const fn init(level: LogLevel) -> Self {
         Self {
-            buffer: buffers::SpscRingBuf::new(),
+            buffer: buffe_rs::SpscRingBuf::new(),
             level,
         }
     }

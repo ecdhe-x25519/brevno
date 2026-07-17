@@ -6,13 +6,14 @@ version = 4
 name = "brevno"
 version = "0.1.0"
 dependencies = [
- "buffers",
+ "buffe-rs",
  "log",
 ]
 
 [[package]]
-name = "buffers"
+name = "buffe-rs"
 version = "0.1.0"
+source = "git+https://github.com/ecdhe-x25519/buffe-rs#d26ac51e8a2d8740958f8f42f43a5b6b97b968a6"
 
 [[package]]
 name = "log"
