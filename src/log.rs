@@ -69,7 +69,7 @@ impl<const NB: usize, const NL: usize> Drop for Logger<NB, NL> {
     fn drop(&mut self) {
         use std::io::{self, Write};
         
-        while let Some(log) = self.read_log() {
+        if let Some(log) = self.read_log() {
             if let Ok(text) = log.decode() {
                 let _ = io::stderr().write_all(text.as_bytes());
             }
@@ -139,10 +139,6 @@ impl<const NB: usize, const NL: usize> Logger<NB, NL> {
 
     #[inline(always)]
     pub fn write_log(&self, level: LogLevel, args: fmt::Arguments) -> Result<(), &'static str> {
-        if (self.level as u8) < (level as u8) {
-            return Ok(());
-        }
-
         if self.buffer.is_full() {
             return Err("Buffer is full");
         }
@@ -243,5 +239,4 @@ mod log_test {
         println!("=================");
         println!("\n");
     }
-
 }
